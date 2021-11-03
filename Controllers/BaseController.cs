@@ -12,9 +12,9 @@ namespace DSCC.CW1._7902.API.Controllers
     // is IRepository interface
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class BaseController<TEntity, TRepository> : ControllerBase
-        where TEntity : class, IModel
-        where TRepository : IRepository<TEntity>
+    public abstract class BaseController<TModel, TRepository> : ControllerBase
+        where TModel : class, IModel
+        where TRepository : IRepository<TModel>
     {
         // Create readonly IRepository instance.
         private readonly TRepository _repository;
@@ -30,26 +30,26 @@ namespace DSCC.CW1._7902.API.Controllers
 
         // GET: api/[controller]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TEntity>>> Get()
+        public async Task<ActionResult<IEnumerable<TModel>>> Get()
         {
             return await _repository.GetAll();
         }
 
         // GET: api/[controller]/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TEntity>> Get(int id)
+        public async Task<ActionResult<TModel>> Get(int id)
         {
-            var movie = await _repository.Get(id);
-            if (movie == null)
+            var model = await _repository.Get(id);
+            if (model == null)
             {
                 return NotFound();
             }
-            return movie;
+            return model;
         }
 
         // PUT: api/[controller]/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, TEntity entity)
+        public async Task<IActionResult> Put(int id, TModel entity)
         {
             if (id != entity.Id)
             {
@@ -61,7 +61,7 @@ namespace DSCC.CW1._7902.API.Controllers
 
         // POST: api/[controller]
         [HttpPost]
-        public async Task<ActionResult<TEntity>> Post(TEntity entity)
+        public async Task<ActionResult<TModel>> Post(TModel entity)
         {
             await _repository.Add(entity);
             return CreatedAtAction("Get", new { id = entity.Id }, entity);
@@ -69,7 +69,7 @@ namespace DSCC.CW1._7902.API.Controllers
 
         // DELETE: api/[controller]/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TEntity>> Delete(int id)
+        public async Task<ActionResult<TModel>> Delete(int id)
         {
             var entity = await _repository.Delete(id);
             if (entity == null)
