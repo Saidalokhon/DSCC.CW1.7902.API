@@ -11,9 +11,10 @@ namespace DSCC.CW1._7902.API.DbContexts
         {
 
         }
-
+        #region DbSets
         // Add DbSets (Positions, Employees tables)
         public DbSet<Position> Positions { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        #endregion
     }
 }

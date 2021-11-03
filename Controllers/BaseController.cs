@@ -8,7 +8,7 @@ namespace DSCC.CW1._7902.API.Controllers
 {
     // Create abstract class for base controller that extends ControllerBase abstract
     // class (which is a base class for an MVC controller without view support).
-    // The type constraints are set to TEntity, which is IModel and TRepository, which
+    // The type constraints are set to TModel and TRepository, which
     // is IRepository interface
     [Route("api/[controller]")]
     [ApiController]
@@ -16,6 +16,7 @@ namespace DSCC.CW1._7902.API.Controllers
         where TModel : class, IModel
         where TRepository : IRepository<TModel>
     {
+        #region Private variables and constructor
         // Create readonly IRepository instance.
         private readonly TRepository _repository;
 
@@ -24,17 +25,20 @@ namespace DSCC.CW1._7902.API.Controllers
         {
             _repository = repository;
         }
+        #endregion
 
         // The following code defines CRUD methods, that use _repository instance
         // to access the SQL database.
 
+        #region GetAll
         // GET: api/[controller]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TModel>>> Get()
         {
             return await _repository.GetAll();
         }
-
+        #endregion
+        #region Get
         // GET: api/[controller]/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TModel>> Get(int id)
@@ -46,7 +50,8 @@ namespace DSCC.CW1._7902.API.Controllers
             }
             return model;
         }
-
+        #endregion
+        #region Put
         // PUT: api/[controller]/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, TModel entity)
@@ -58,7 +63,8 @@ namespace DSCC.CW1._7902.API.Controllers
             await _repository.Update(entity);
             return NoContent();
         }
-
+        #endregion
+        #region Post
         // POST: api/[controller]
         [HttpPost]
         public async Task<ActionResult<TModel>> Post(TModel entity)
@@ -66,7 +72,8 @@ namespace DSCC.CW1._7902.API.Controllers
             await _repository.Add(entity);
             return CreatedAtAction("Get", new { id = entity.Id }, entity);
         }
-
+        #endregion
+        #region Delete
         // DELETE: api/[controller]/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<TModel>> Delete(int id)
@@ -78,5 +85,6 @@ namespace DSCC.CW1._7902.API.Controllers
             }
             return entity;
         }
+        #endregion
     }
 }
