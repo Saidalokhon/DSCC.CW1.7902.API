@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /publish_output
+  - source: /
     destination: /var/www/html/DSCC.CW1.7902.API
 hooks:
   BeforeInstall:
