@@ -1,0 +1,12 @@
+[Unit]  
+Description=DSCC.CW1.7902.CodeDeploy 
+[Service]  
+WorkingDirectory=/var/www/html/DSCC.CW1.7902.API 
+ExecStart=/usr/bin/dotnet /var/www/html/DSCC.CW1.7902.API/DSCC.CW1.7902.API.dll  
+Restart=always  
+RestartSec=10  
+SyslogIdentifier=netcore-demo  
+User=www-data  
+Environment=ASPNETCORE_ENVIRONMENT=Production  
+[Install]  
+WantedBy=multi-user.target
