@@ -9,7 +9,7 @@ namespace DSCC.CW1._7902.API.Repository
     {
         public PositionsRepository(CompanyContext context) : base(context)
         {
-            
+
         }
     }
 }
