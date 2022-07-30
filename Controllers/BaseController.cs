@@ -12,35 +12,31 @@ namespace DSCC.CW1._7902.API.Controllers
         where T : class, IModel
     {
         private readonly IRepository<T> _repository;
+        private T entity;
 
         public BaseController(IRepository<T> repository)
         {
             _repository = repository;
         }
 
-        // GET: api/[controller]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T>>> Get() =>
             await _repository.Get();
 
-        // GET: api/[controller]/5
         [HttpGet("{id}")]
         public async Task<ActionResult<T>> Get(int id) =>
-            await _repository.Get(id) is null ? NotFound() : await _repository.Get(id);
+            null != (entity = await _repository.Get(id)) ? NotFound() : entity;
 
-        // PUT: api/[controller]/5
         [HttpPut("{id}")]
         public async Task<ActionResult<T>> Put(int id, T entity) =>
-            id != entity.Id ? BadRequest() : await _repository.Update(entity);
+            id != entity.Id ? BadRequest(entity) : await _repository.Update(entity);
 
-        // POST: api/[controller]
         [HttpPost]
         public async Task<ActionResult<T>> Post(T entity) =>
             await _repository.Add(entity);
 
-        // DELETE: api/[controller]/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<T>> Delete(int id) => 
-            await _repository.Delete(id) is null ? NotFound() : await _repository.Delete(id);
+            null != (entity = await _repository.Delete(id)) ? NotFound() : entity;
     }
 }
