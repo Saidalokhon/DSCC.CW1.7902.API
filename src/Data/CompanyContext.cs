@@ -1,7 +1,7 @@
 ﻿using DSCC.CW1._7902.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DSCC.CW1._7902.API.DbContexts
+namespace DSCC.CW1._7902.API.Data
 {
     public class CompanyContext : DbContext
     {
