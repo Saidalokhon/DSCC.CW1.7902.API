@@ -6,7 +6,7 @@ namespace DSCC.CW1._7902.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : BaseController<Employee, EmployeesRepository>
+    public class EmployeesController : BaseController<Employee>
     {
         public EmployeesController(EmployeesRepository repository) : base(repository)
         {

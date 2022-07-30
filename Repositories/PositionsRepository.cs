@@ -3,7 +3,7 @@ using DSCC.CW1._7902.API.Models;
 
 namespace DSCC.CW1._7902.API.Repository
 {
-    public class PositionsRepository : BaseRepository<Position, CompanyContext>
+    public class PositionsRepository : BaseRepository<Position>
     {
         public PositionsRepository(CompanyContext context) : base(context)
         {

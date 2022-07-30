@@ -6,7 +6,7 @@ namespace DSCC.CW1._7902.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PositionsController : BaseController<Position, PositionsRepository>
+    public class PositionsController : BaseController<Position>
     {
         public PositionsController(PositionsRepository repository) : base(repository)
         {

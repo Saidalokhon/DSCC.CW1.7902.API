@@ -5,51 +5,49 @@ using System.Threading.Tasks;
 
 namespace DSCC.CW1._7902.API.Repository
 {
-    public abstract class BaseRepository<TModel, TContext> : IRepository<TModel>
-        where TModel : class, IModel
-        where TContext : DbContext
+    public abstract class BaseRepository<T> : IRepository<T>
+        where T : class, IModel
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
 
-        public BaseRepository(TContext context)
+        public BaseRepository(DbContext context)
         {
             _context = context;
         }
 
-        public async Task<TModel> Add(TModel entity)
+        public async Task<List<T>> Get()
         {
-            _context.Set<TModel>().Add(entity);
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T> Get(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> Add(T entity)
+        {
+            _context.Set<T>().Add(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
         
-        public async Task<TModel> Delete(int id)
+        public async Task<T> Delete(int id)
         {
-            var entity = await _context.Set<TModel>().FindAsync(id);
-            if (entity == null)
+            var entity = await _context.Set<T>().FindAsync(id);
+
+            if (entity is not null)
             {
-                return entity;
+                _context.Set<T>().Remove(entity);
+                await _context.SaveChangesAsync();
             }
 
-            _context.Set<TModel>().Remove(entity);
-            await _context.SaveChangesAsync();
-
             return entity;
         }
-        
-        public async Task<TModel> Get(int id)
+
+        public async Task<T> Update(T entity)
         {
-            return await _context.Set<TModel>().FindAsync(id);
-        }
-        
-        public async Task<List<TModel>> GetAll()
-        {
-            return await _context.Set<TModel>().ToListAsync();
-        }
-        
-        public async Task<TModel> Update(TModel entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
