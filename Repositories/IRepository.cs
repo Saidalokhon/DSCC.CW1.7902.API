@@ -4,9 +4,6 @@ using System.Threading.Tasks;
 
 namespace DSCC.CW1._7902.API.Repository
 {
-    // Create interface for repositories. In this project Generic Repository Pattern
-    // was implemented. The type (T) constraint must be a reference type. In this 
-    // case it is IModel interface.
     public interface IRepository<T> where T : class, IModel
     {
         // Add required CRUD methods.

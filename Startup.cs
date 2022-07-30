@@ -29,7 +29,9 @@ namespace DSCC.CW1._7902.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DSCC.CW1._7902.API", Version = "v1" });
             });
             services.AddDbContext<CompanyContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CompanyDB")));
+                options.UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("CompanyDB")));
+
             services.AddScoped<EmployeesRepository>();
             services.AddScoped<PositionsRepository>();
         }
